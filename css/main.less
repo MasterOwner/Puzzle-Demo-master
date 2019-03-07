@@ -1,0 +1,92 @@
+//Variables
+@tileSize: 70px;
+@tileBorder: 1px;
+@boardSize: (@tileSize + @tileBorder * 2) * 4;
+@boardPadding: 2px;
+
+//Mixins
+.transition(@args) {
+	-webkit-transition: all @args;
+	-moz-transition: all @args;
+	-ms-transition: all @args;
+	-o-transition: all @args;
+	transition: all @args;
+}
+
+.gradient(@begin, @end) {
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,@begin), color-stop(100%,@end)); //iOS 4.3-
+	background: -webkit-linear-gradient(top, @begin 0%, @end 100%);
+	background: -moz-linear-gradient(top, @begin 0%, @end 100%);
+	background: -ms-linear-gradient(top, @begin 0%, @end 100%);
+	background: -o-linear-gradient(top, @begin 0%, @end 100%);
+	background: linear-gradient(top, @begin 0%, @end 100%);
+}
+
+//Main
+* {
+	-webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+	margin: 0;
+	padding: 0;
+	background-color: #ddd;
+	-webkit-user-select: none;
+}
+
+#board {
+	width: @boardSize;
+	height: @boardSize;
+	position: relative;
+	margin: 9px auto;
+	background-color: #ccc;
+	border-radius: 2px;
+	padding: @boardPadding;
+	-webkit-box-shadow: inset 0 1px 8px rgba(0, 0, 0, .2), 0 1px 1px rgba(255, 255, 255, .5);
+	-moz-box-shadow: inset 0 1px 8px rgba(0, 0, 0, .2), 0 1px 1px rgba(255, 255, 255, .5);
+	box-shadow: inset 0 1px 8px rgba(0, 0, 0, .2), 0 1px 1px rgba(255, 255, 255, .5);
+	.tile {
+		display: block;
+		width: @tileSize;
+		height: @tileSize;
+		position: absolute;
+		overflow: hidden;
+		border: @tileBorder solid #eee;
+		-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, .3);
+		-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, .3);
+		box-shadow: 0 1px 4px rgba(0, 0, 0, .3);
+		.transition(.15s ease);
+		-webkit-backface-visibility: hidden;
+		img {
+			width: @boardSize;
+			height: @boardSize;
+			position: relative;
+		}
+		&.drag {
+			.transition(0 cubic-bezier(0,0,0.2,1) ~"!important");
+		}
+	}
+}
+
+#shuffle {
+	display: block;
+	color: #666;
+	cursor: pointer;
+	font-family: Helvetica, Arial, sans-serif;
+	font-weight: bold;
+	text-align: center;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
+	width: @boardSize + 2px;
+	margin: 9px auto;
+	padding: 7px 0;
+	border: 1px solid #aaa;
+	border-top-color: #b9b9b9;
+	border-radius: 2px;
+	-webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .15), 0 1px 1px rgba(255, 255, 255, .5);
+	-moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .15), 0 1px 1px rgba(255, 255, 255, .5);
+	box-shadow: inset 0 1px 2px rgba(0, 0, 0, .15), 0 1px 1px rgba(255, 255, 255, .5);
+	.gradient(#f3f3f3, #d9d9d9);
+	&:active {
+		.gradient(#ddd, #ccc);
+	}
+}
